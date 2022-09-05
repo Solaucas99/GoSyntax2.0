@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 
 export function AppRoutes() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
