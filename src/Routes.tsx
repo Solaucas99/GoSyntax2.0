@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 
 export function AppRoutes() {
   return (
-    <Router>
+    <Router basename="https://solaucas99.github.io/GoSyntax2.0/">
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
