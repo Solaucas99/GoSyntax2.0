@@ -4,9 +4,9 @@ import Home from './Pages/Home';
 
 export function AppRoutes() {
   return (
-    <Router basename="https://solaucas99.github.io/GoSyntax2.0/">
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={process.env.PUBLIC_URL} element={<Home />} />
       </Routes>
     </Router>
   );
