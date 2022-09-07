@@ -23,14 +23,13 @@ import dlpErrorHandler from '../Modules/errorsHandlers/taskHandlers/dlpErrorHand
 import dlpConfigsObserverFn from '../Modules/tasks/dlpConfigsObserverFn';
 import ecConfigsObserverFn from '../Modules/tasks/ecConfigsObserverFn';
 import ecTriggersObserverFn from '../Modules/tasks/ecTriggersObserverFn';
-// import Notification from '../Components/Layout/Notifications/Notification';
 
 const Container = styled('div', {
   width: '100%',
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  maxHeight: '85vh',
+  maxHeight: '87vh',
   padding: '20px 15px',
 });
 
@@ -165,7 +164,7 @@ function Home() {
       const CmView = new EditorView({
         state: EditorState.create({
           extensions: [basicSetup, html(), theme],
-          doc: `\n`.repeat(10),
+          doc: `\n`.repeat(12),
         }),
         parent: ref.current as HTMLDivElement,
       });

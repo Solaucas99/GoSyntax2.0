@@ -61,9 +61,23 @@ const URL_FILTER_VALIDATION = (context: ContextGoSyntax) => {
   return { hasError: false };
 };
 
+const TIMER_VALIDATION = (context: ContextGoSyntax) => {
+  if (
+    context?.taskConfigs.enhancedConversions?.ecTimerSwitch &&
+    !context?.taskConfigs.enhancedConversions?.ecTimerProps.ecTimerSeconds
+  ) {
+    toast.error(
+      'Para usar o temporizador de Enhanced Conversions, o campo de segundos deve ser preenchido'
+    );
+    return { hasError: true };
+  }
+  return { hasError: false };
+};
+
 export default [
   EMPTY_EMAIL,
   PHONE_BUT_NO_AREA,
   CONVERSION_VALUE_VALIDATION,
   URL_FILTER_VALIDATION,
+  TIMER_VALIDATION,
 ];

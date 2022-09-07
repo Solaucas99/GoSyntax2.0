@@ -70,9 +70,6 @@ function DataLayerPushForm() {
             height: '100%',
             bgcolor: '#292929',
             padding: '12px',
-            borderBottom: 1,
-            borderColor: 'divider',
-            borderRadius: '12px',
           }}
           subheader={
             <ListSubheader

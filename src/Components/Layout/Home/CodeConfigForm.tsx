@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import {
   CustomMessageCondition,
   JSEventType,
+  TimerConditions,
   TriggerType,
   URLFilterConditions,
   useContextProvider,
@@ -72,6 +73,11 @@ function CodeConfigForm() {
     useState<URLFilterConditions>('contains');
   const [urlFilterTextValue, setUrlFilterTextValue] = useState<string>('');
 
+  const [timerSwitch, setTimerSwitch] = useState<boolean>(false);
+  const [timerConditionValue, setTimerConditionValue] =
+    useState<TimerConditions>('timeout');
+  const [timerSecondsValue, setTimerSecondsValue] = useState<string>('');
+
   const { setContext } = useContextProvider();
 
   useEffect(() => {
@@ -84,6 +90,11 @@ function CodeConfigForm() {
           urlFilterProps: {
             urlFilterCondition: urlFilterConditionValue,
             urlFilterText: urlFilterTextValue,
+          },
+          timerSwitch,
+          timerProps: {
+            timerCondition: timerConditionValue,
+            timerSeconds: timerSecondsValue,
           },
           triggerProps: {
             triggerType: triggerTypeValue,
@@ -109,6 +120,9 @@ function CodeConfigForm() {
     customMessageTextValue,
     urlFilterConditionValue,
     urlFilterTextValue,
+    timerConditionValue,
+    timerSecondsValue,
+    timerSwitch,
     setContext,
   ]);
 
@@ -120,11 +134,8 @@ function CodeConfigForm() {
             sx={{
               width: '100%',
               bgcolor: '#292929',
-              padding: '12px',
               borderBottom: 1,
               borderColor: 'divider',
-              borderTopLeftRadius: '12px',
-              borderTopRightRadius: '12px',
               height: '100%',
             }}
             subheader={
@@ -254,9 +265,6 @@ function CodeConfigForm() {
             sx={{
               width: '100%',
               bgcolor: '#292929',
-              padding: '12px',
-              borderBottomLeftRadius: '12px',
-              borderBottomRightRadius: '12px',
               height: '100%',
             }}
             subheader={
@@ -271,7 +279,7 @@ function CodeConfigForm() {
             }
           >
             <ListItem>
-              <FormGroup>
+              <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
                 <FormControlLabel
                   control={<Switch />}
                   label="Aguardar DOM carregar (DOM Ready)"
@@ -289,6 +297,16 @@ function CodeConfigForm() {
                   checked={urlFilterSwitch}
                   onChange={() => {
                     setUrlFilterSwitch(prevValue => !prevValue);
+                  }}
+                />
+
+                <FormControlLabel
+                  control={<Switch />}
+                  label="Habilitar temporizador"
+                  id="timer-switch"
+                  checked={timerSwitch}
+                  onChange={() => {
+                    setTimerSwitch(prevValue => !prevValue);
                   }}
                 />
               </FormGroup>
@@ -328,6 +346,42 @@ function CodeConfigForm() {
                       setUrlFilterTextValue(e.target.value);
                     }}
                     size="small"
+                  />
+                </FormControl>
+              </DivFilterLayout>
+            </ListItem>
+
+            <ListItem>
+              <DivFilterLayout>
+                <span>Temporizador</span>
+
+                <FormControl sx={{ width: '25%' }} variant="outlined">
+                  <Select
+                    labelId="timer-condition-label"
+                    id="timer-condition"
+                    value={timerConditionValue}
+                    onChange={e => {
+                      setTimerConditionValue(e.target.value as TimerConditions);
+                    }}
+                    disabled={!timerSwitch}
+                    size="small"
+                  >
+                    <MenuItem value="timeout">Tempo Limite</MenuItem>
+                    <MenuItem value="interval">Intervalo</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <FormControl sx={{ width: '25%' }} variant="outlined">
+                  <TextField
+                    disabled={!timerSwitch}
+                    id="timer-seconds"
+                    variant="outlined"
+                    value={timerSecondsValue}
+                    onChange={e => {
+                      setTimerSecondsValue(e.target.value);
+                    }}
+                    size="small"
+                    label="Tempo em segundos"
                   />
                 </FormControl>
               </DivFilterLayout>

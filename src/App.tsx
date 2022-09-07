@@ -17,7 +17,7 @@ function App() {
       <ContextProvider>
         <Home />
       </ContextProvider>
-      <ToastContainer theme="colored" />
+      <ToastContainer theme="colored" position="bottom-right" />
     </GlobalDiv>
   );
 }

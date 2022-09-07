@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import {
   EnhancedConversionCurrencyType,
   EnhancedConversionType,
+  TimerConditions,
   URLFilterConditions,
   useContextProvider,
 } from '../../../../Providers/ContextProvider';
@@ -56,6 +57,11 @@ function EnhancedConversionForm() {
     useState<URLFilterConditions>('contains');
   const [ecUrlFilterTextValue, setEcUrlFilterTextValue] = useState<string>('');
 
+  const [ecTimerSwitch, setEcTimerSwitch] = useState<boolean>(false);
+  const [ecTimerConditionValue, setEcTimerConditionValue] =
+    useState<TimerConditions>('timeout');
+  const [ecTimerSecondsValue, setEcTimerSecondsValue] = useState<string>('');
+
   const [enhancedConversionValue, setEnhancedConversionValue] =
     useState<string>('');
   const [enhancedConversionTransactionId, setEnhancedConversionTransactionId] =
@@ -81,9 +87,14 @@ function EnhancedConversionForm() {
           enhancedConversions: {
             enhancedConversionType,
             ecUrlFilterSwitch,
+            ecTimerSwitch,
             ecUrlFilterProps: {
               ecUrlFilterCondition: ecUrlFilterConditionValue,
               ecUrlFilterText: ecUrlFilterTextValue,
+            },
+            ecTimerProps: {
+              ecTimerCondition: ecTimerConditionValue,
+              ecTimerSeconds: ecTimerSecondsValue,
             },
             ecPurchaseData: {
               enhancedConversionValue,
@@ -108,6 +119,9 @@ function EnhancedConversionForm() {
     ecUrlFilterSwitch,
     ecUrlFilterConditionValue,
     ecUrlFilterTextValue,
+    ecTimerSwitch,
+    ecTimerConditionValue,
+    ecTimerSecondsValue,
     enhancedConversionValue,
     enhancedConversionTransactionId,
     enhancedConversionCurrency,
@@ -128,8 +142,6 @@ function EnhancedConversionForm() {
             padding: '8px 12px',
             borderBottom: 1,
             borderColor: 'divider',
-            borderTopRightRadius: '12px',
-            borderTopLeftRadius: '12px',
           }}
           subheader={
             <ListSubheader
@@ -168,13 +180,23 @@ function EnhancedConversionForm() {
           </ListItem>
 
           <ListItem>
-            <FormGroup>
+            <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
               <FormControlLabel
                 control={<Switch />}
                 label="Habilitar filtro de URL"
                 id="url-filter-switch"
                 checked={ecUrlFilterSwitch}
                 onChange={() => setEcUrlFilterSwitch(prevValue => !prevValue)}
+              />
+
+              <FormControlLabel
+                control={<Switch />}
+                label="Habilitar temporizador"
+                id="ec-timer-switch"
+                checked={ecTimerSwitch}
+                onChange={() => {
+                  setEcTimerSwitch(prevValue => !prevValue);
+                }}
               />
             </FormGroup>
           </ListItem>
@@ -211,6 +233,42 @@ function EnhancedConversionForm() {
                   size="small"
                   value={ecUrlFilterTextValue}
                   onChange={e => setEcUrlFilterTextValue(e.target.value)}
+                />
+              </FormControl>
+            </DivFilterLayout>
+          </ListItem>
+
+          <ListItem>
+            <DivFilterLayout>
+              <span>Temporizador</span>
+
+              <FormControl sx={{ width: '25%' }} variant="outlined">
+                <Select
+                  labelId="ec-timer-condition-label"
+                  id="ec-timer-condition"
+                  value={ecTimerConditionValue}
+                  onChange={e => {
+                    setEcTimerConditionValue(e.target.value as TimerConditions);
+                  }}
+                  disabled={!ecTimerSwitch}
+                  size="small"
+                >
+                  <MenuItem value="timeout">Tempo Limite</MenuItem>
+                  <MenuItem value="interval">Intervalo</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ width: '25%' }} variant="outlined">
+                <TextField
+                  disabled={!ecTimerSwitch}
+                  id="ec-timer-seconds"
+                  variant="outlined"
+                  value={ecTimerSecondsValue}
+                  onChange={e => {
+                    setEcTimerSecondsValue(e.target.value);
+                  }}
+                  size="small"
+                  label="Tempo em segundos"
                 />
               </FormControl>
             </DivFilterLayout>
@@ -280,10 +338,6 @@ function EnhancedConversionForm() {
             height: '100%',
             bgcolor: '#292929',
             padding: '8px 12px',
-            borderBottom: 1,
-            borderColor: 'divider',
-            borderBottomRightRadius: '12px',
-            borderBottomLeftRadius: '12px',
           }}
           subheader={
             <ListSubheader

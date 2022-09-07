@@ -22,6 +22,8 @@ export type URLFilterConditions =
   | 'equals'
   | 'no-equals';
 
+export type TimerConditions = 'timeout' | 'interval';
+
 // Task - Ads Conversion Code
 export type AccConversionType = 'no-value' | 'with-value';
 export type AccConversionCurrencyType = 'BRL' | 'USD' | 'EUR';
@@ -50,9 +52,14 @@ export type ContextGoSyntax = {
     };
     domReadySwitch: boolean;
     urlFilterSwitch: boolean;
-    urlFilterProps: {
+    timerSwitch: boolean;
+    urlFilterProps?: {
       urlFilterCondition: URLFilterConditions;
       urlFilterText: string;
+    };
+    timerProps?: {
+      timerCondition: TimerConditions;
+      timerSeconds: string;
     };
   };
   taskConfigs: {
@@ -74,9 +81,14 @@ export type ContextGoSyntax = {
     enhancedConversions?: {
       enhancedConversionType: EnhancedConversionType;
       ecUrlFilterSwitch: boolean;
+      ecTimerSwitch: boolean;
       ecUrlFilterProps?: {
         ecUrlFilterCondition: URLFilterConditions;
         ecUrlFilterText: string;
+      };
+      ecTimerProps?: {
+        ecTimerCondition: TimerConditions;
+        ecTimerSeconds: string;
       };
       ecPurchaseData?: {
         enhancedConversionValue: string;
@@ -104,9 +116,14 @@ const contextInitialValue: ContextGoSyntax = {
   codeConfigs: {
     domReadySwitch: false,
     urlFilterSwitch: false,
+    timerSwitch: false,
     urlFilterProps: {
       urlFilterCondition: 'contains',
       urlFilterText: '',
+    },
+    timerProps: {
+      timerCondition: 'timeout',
+      timerSeconds: '',
     },
     triggerProps: {
       triggerType: 'no-event',
@@ -148,10 +165,15 @@ const contextInitialValue: ContextGoSyntax = {
         enhancedConversionTransactionId: '',
         enhancedConversionCurrency: 'BRL',
       },
+      ecTimerSwitch: false,
       ecUrlFilterSwitch: false,
       ecUrlFilterProps: {
         ecUrlFilterCondition: 'contains',
         ecUrlFilterText: '',
+      },
+      ecTimerProps: {
+        ecTimerCondition: 'timeout',
+        ecTimerSeconds: '',
       },
     },
   },

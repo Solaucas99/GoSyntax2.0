@@ -53,9 +53,23 @@ const URL_FILTER_VALIDATION = (context: ContextGoSyntax) => {
   return { hasError: false };
 };
 
+const TIMER_VALIDATION = (context: ContextGoSyntax) => {
+  if (
+    context?.codeConfigs?.timerSwitch &&
+    !context?.codeConfigs?.timerProps.timerSeconds
+  ) {
+    toast.error(
+      'Para usar o temporizador, o campo de segundos deve ser preenchido'
+    );
+    return { hasError: true };
+  }
+  return { hasError: false };
+};
+
 export default [
   NOTHING_SELECTED,
   JS_EVENTS_VALIDATION,
   CUSTOM_MESSAGE_VALIDATION,
   URL_FILTER_VALIDATION,
+  TIMER_VALIDATION,
 ];

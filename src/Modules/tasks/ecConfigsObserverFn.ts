@@ -91,6 +91,49 @@ const URL_FILTER_CHECKED = (context: ContextGoSyntax) => {
   return { changes: [] };
 };
 
+const TIMER_CHECKED = (context: ContextGoSyntax) => {
+  if (context.taskConfigs?.enhancedConversions?.ecTimerSwitch) {
+    const condition =
+      context.taskConfigs?.enhancedConversions?.ecTimerProps.ecTimerCondition;
+    const text =
+      context.taskConfigs?.enhancedConversions?.ecTimerProps.ecTimerSeconds;
+
+    if (condition === 'timeout') {
+      return {
+        changes: [
+          {
+            from: 3,
+            insert: `setTimeout(function() {`,
+          },
+          {
+            from: 9,
+            insert: `}, ${text} * 1000)`,
+          },
+        ],
+      };
+    }
+
+    if (condition === 'interval') {
+      return {
+        changes: [
+          {
+            from: 3,
+            insert: `var interval = setInterval(function() {`,
+          },
+          {
+            from: 9,
+            insert: `}, ${text} * 1000)`,
+          },
+        ],
+      };
+    }
+
+    return { changes: [] };
+  }
+
+  return { changes: [] };
+};
+
 const ENHANCED_CONVERSIONS = (context: ContextGoSyntax, cmView: EditorView) => {
   const emailCssSelector =
     context.taskConfigs.enhancedConversions?.ecFieldsData.email;
@@ -158,4 +201,9 @@ const ENHANCED_CONVERSIONS = (context: ContextGoSyntax, cmView: EditorView) => {
   };
 };
 
-export default [SCRIPT_TAG, URL_FILTER_CHECKED, ENHANCED_CONVERSIONS];
+export default [
+  SCRIPT_TAG,
+  URL_FILTER_CHECKED,
+  ENHANCED_CONVERSIONS,
+  TIMER_CHECKED,
+];

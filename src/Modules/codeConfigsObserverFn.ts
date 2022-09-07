@@ -27,7 +27,7 @@ const URL_FILTER_CHECKED = (context: ContextGoSyntax) => {
             insert: `if (window.location.href.includes('${text}')) {`,
           },
           {
-            from: 9,
+            from: 11,
             insert: `};`,
           },
         ],
@@ -42,7 +42,7 @@ const URL_FILTER_CHECKED = (context: ContextGoSyntax) => {
             insert: `if (!window.location.href.includes('${text}')) {`,
           },
           {
-            from: 9,
+            from: 11,
             insert: `};`,
           },
         ],
@@ -57,7 +57,7 @@ const URL_FILTER_CHECKED = (context: ContextGoSyntax) => {
             insert: `if (${text} === window.location.href) {`,
           },
           {
-            from: 9,
+            from: 11,
             insert: `};`,
           },
         ],
@@ -72,8 +72,49 @@ const URL_FILTER_CHECKED = (context: ContextGoSyntax) => {
             insert: `if (${text} !== window.location.href) {`,
           },
           {
-            from: 9,
+            from: 11,
             insert: `};`,
+          },
+        ],
+      };
+    }
+
+    return { changes: [] };
+  }
+
+  return { changes: [] };
+};
+
+const TIMER_CHECKED = (context: ContextGoSyntax) => {
+  if (context.codeConfigs?.timerSwitch) {
+    const condition = context.codeConfigs?.timerProps.timerCondition;
+    const text = context.codeConfigs?.timerProps.timerSeconds;
+
+    if (condition === 'timeout') {
+      return {
+        changes: [
+          {
+            from: 3,
+            insert: `setTimeout(function() {`,
+          },
+          {
+            from: 9,
+            insert: `}, ${text} * 1000)`,
+          },
+        ],
+      };
+    }
+
+    if (condition === 'interval') {
+      return {
+        changes: [
+          {
+            from: 3,
+            insert: `var interval = setInterval(function() {`,
+          },
+          {
+            from: 9,
+            insert: `}, ${text} * 1000)`,
           },
         ],
       };
@@ -94,7 +135,7 @@ const DOM_READY_CHECKED = (context: ContextGoSyntax) => {
           insert: `document.addEventListener('DOMContentLoaded', function() {`,
         },
         {
-          from: 8,
+          from: 10,
           insert: `});`,
         },
       ],
@@ -116,11 +157,25 @@ const TRIGGER_TYPE = (context: ContextGoSyntax) => {
       changes: [
         {
           from: 3,
-          insert: `document.querySelector('${context.codeConfigs?.triggerProps.jsEventCSSTarget}').addEventListener('${context.codeConfigs?.triggerProps.jsEventType}', function() {`,
+          insert: `
+          var el = document.querySelector('${
+            context.codeConfigs?.triggerProps.jsEventCSSTarget
+          }');
+          \n
+          if (el) {
+            ${
+              context.codeConfigs?.timerSwitch &&
+              context.codeConfigs?.timerProps.timerCondition === 'interval'
+                ? 'clearInterval(interval)'
+                : ''
+            }
+            el.addEventListener('${
+              context.codeConfigs?.triggerProps.jsEventType
+            }', function() {`,
         },
         {
           from: 6,
-          insert: '});',
+          insert: '}); }',
         },
       ],
     };
@@ -131,11 +186,26 @@ const TRIGGER_TYPE = (context: ContextGoSyntax) => {
       changes: [
         {
           from: 3,
-          insert: `document.querySelectorAll('${context.codeConfigs?.triggerProps.jsEventCSSTarget}').forEach(function (element) {   element.addEventListener('${context.codeConfigs?.triggerProps.jsEventType}', function() {`,
+          insert: `
+          var els = document.querySelectorAll('${
+            context.codeConfigs?.triggerProps.jsEventCSSTarget
+          }');
+          \n
+          if (els.length > 0) {
+            ${
+              context.codeConfigs?.timerSwitch &&
+              context.codeConfigs?.timerProps.timerCondition === 'interval'
+                ? 'clearInterval(interval)'
+                : ''
+            }
+            els.forEach(function (element) {   element.addEventListener('${
+              context.codeConfigs?.triggerProps.jsEventType
+            }', function() {
+          `,
         },
         {
           from: 6,
-          insert: '  });  });',
+          insert: ' });  }); }',
         },
       ],
     };
@@ -169,6 +239,7 @@ const TRIGGER_TYPE = (context: ContextGoSyntax) => {
 
 export default [
   URL_FILTER_CHECKED,
+  TIMER_CHECKED,
   SCRIPT_TAG,
   DOM_READY_CHECKED,
   TRIGGER_TYPE,
