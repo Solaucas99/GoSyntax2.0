@@ -5,7 +5,8 @@ const NOTHING_SELECTED = (context: ContextGoSyntax) => {
   if (
     context?.codeConfigs?.triggerProps.triggerType === 'no-event' &&
     !context?.codeConfigs?.domReadySwitch &&
-    !context?.codeConfigs?.urlFilterSwitch
+    !context?.codeConfigs?.urlFilterSwitch &&
+    !context?.codeConfigs?.timerSwitch
   ) {
     toast.error('Nenhum campo de código foi acionado!');
     return { hasError: true };

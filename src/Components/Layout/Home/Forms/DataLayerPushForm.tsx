@@ -136,6 +136,7 @@ function DataLayerPushForm() {
                               )
                             )
                           }
+                          required
                           value={
                             paramsArrKeyValues.filter(
                               value => value.id === element.id
@@ -158,6 +159,7 @@ function DataLayerPushForm() {
                               )
                             )
                           }
+                          required
                           value={
                             paramsArrKeyValues.filter(
                               value => value.id === element.id

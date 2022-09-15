@@ -233,6 +233,8 @@ function EnhancedConversionForm() {
                   size="small"
                   value={ecUrlFilterTextValue}
                   onChange={e => setEcUrlFilterTextValue(e.target.value)}
+                  required={ecUrlFilterSwitch}
+                  label="Texto"
                 />
               </FormControl>
             </DivFilterLayout>
@@ -261,6 +263,7 @@ function EnhancedConversionForm() {
               <FormControl sx={{ width: '25%' }} variant="outlined">
                 <TextField
                   disabled={!ecTimerSwitch}
+                  required={ecTimerSwitch}
                   id="ec-timer-seconds"
                   variant="outlined"
                   value={ecTimerSecondsValue}
@@ -278,6 +281,7 @@ function EnhancedConversionForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 disabled={enhancedConversionType === 'no-value'}
+                required={enhancedConversionType === 'with-value'}
                 id="enhanced-conversion-value-css-selector"
                 variant="outlined"
                 label="Insira o seletor CSS do valor"
@@ -292,6 +296,7 @@ function EnhancedConversionForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 disabled={enhancedConversionType === 'no-value'}
+                required={enhancedConversionType === 'with-value'}
                 id="enahnced-conversion-css-target"
                 variant="outlined"
                 label="Insira o seletor CSS do ID da Transação"
@@ -360,6 +365,7 @@ function EnhancedConversionForm() {
                 value={enhancedConversionEmail}
                 size="small"
                 type="text"
+                required
               />
             </FormControl>
           </ListItem>

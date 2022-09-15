@@ -92,6 +92,7 @@ function AnalyticsEventForm() {
                 variant="outlined"
                 onChange={e => setAneEventName(e.target.value)}
                 value={aneEventName}
+                required
               />
             </FormControl>
           </ListItem>
@@ -155,6 +156,7 @@ function AnalyticsEventForm() {
                               value => value.id === element.id
                             )[0].key
                           }
+                          required
                         />
                       </FormControl>
 
@@ -177,6 +179,7 @@ function AnalyticsEventForm() {
                               value => value.id === element.id
                             )[0].value
                           }
+                          required
                         />
                       </FormControl>
 

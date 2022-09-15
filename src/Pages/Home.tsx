@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TabContext, TabList } from '@mui/lab';
 import React, { useEffect, useRef, useState } from 'react';
 import { HiCode } from 'react-icons/hi';
+import { AiOutlineClear } from 'react-icons/ai';
 import { basicSetup, EditorView } from 'codemirror';
 import { html } from '@codemirror/lang-html';
 import { EditorState } from '@codemirror/state';
@@ -26,10 +27,10 @@ import ecTriggersObserverFn from '../Modules/tasks/ecTriggersObserverFn';
 
 const Container = styled('div', {
   width: '100%',
-  height: '100%',
+  height: '87vh',
   display: 'flex',
   flexDirection: 'column',
-  maxHeight: '87vh',
+  maxHeight: '100%',
   padding: '20px 15px',
 });
 
@@ -46,7 +47,6 @@ const ExtensionTitle = styled('h2', {});
 
 const CodeConfigBox = styled('div', {
   width: '100%',
-  height: '100%',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-around',
@@ -54,20 +54,17 @@ const CodeConfigBox = styled('div', {
 
 const CodeMirrorBox = styled('div', {
   width: '100%',
-  height: '100%',
+  padding: '15px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-around',
   alignItems: 'center',
-  position: 'absolute',
-  background: '#121212f2',
   zIndex: 3,
   top: 0,
   overflowY: 'auto',
 });
 
 const CodeMirrorCodeBox = styled('div', {
-  width: '80%',
+  width: '100%',
   maxHeight: '80%',
   overflowY: 'auto',
 });
@@ -122,6 +119,7 @@ function Home() {
   const ref = useRef<HTMLDivElement>(null);
 
   const [codeMirrorEnable, setCodeMirrorEnable] = useState<boolean>(false);
+  const [view, setView] = useState<EditorView | null>(null);
   const { context } = useContextProvider();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -161,6 +159,8 @@ function Home() {
 
   useEffect(() => {
     if (codeMirrorEnable) {
+      if (view) view.destroy();
+
       const CmView = new EditorView({
         state: EditorState.create({
           extensions: [basicSetup, html(), theme],
@@ -286,29 +286,15 @@ function Home() {
           ],
         });
       }
+
+      setCodeMirrorEnable(false);
+      setView(CmView);
     }
-  }, [codeMirrorEnable, context]);
+  }, [codeMirrorEnable, context, view]);
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      {codeMirrorEnable && (
-        <CodeMirrorBox>
-          <CodeMirrorCodeBox ref={ref} />
-          <Button
-            type="button"
-            onClick={() => {
-              setCodeMirrorEnable(false);
-              window.location.reload();
-            }}
-            variant="contained"
-            color="error"
-            size="large"
-          >
-            Fechar
-          </Button>
-        </CodeMirrorBox>
-      )}
 
       <Container>
         <ExtensionBox>
@@ -351,6 +337,21 @@ function Home() {
                     >
                       Gerar Código
                     </Button>
+
+                    <Button
+                      sx={{ width: '100%', mb: 2 }}
+                      onClick={() => window.location.reload()}
+                      variant="contained"
+                      endIcon={<AiOutlineClear />}
+                      type="button"
+                      color="warning"
+                    >
+                      Limpar Campos
+                    </Button>
+
+                    <CodeMirrorBox>
+                      <CodeMirrorCodeBox ref={ref} />
+                    </CodeMirrorBox>
                   </FormConfig>
                 </FormBox>
               </Box>

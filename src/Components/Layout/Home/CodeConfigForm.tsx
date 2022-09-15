@@ -190,6 +190,7 @@ function CodeConfigForm() {
                     triggerTypeValue === 'no-event' ||
                     triggerTypeValue === 'custom-message'
                   }
+                  required={triggerTypeValue !== 'no-event'}
                   value={jsEventTypeValue}
                   onChange={e => {
                     setJsEventTypeValue(e.target.value as JSEventType);
@@ -211,6 +212,10 @@ function CodeConfigForm() {
                   disabled={
                     triggerTypeValue === 'no-event' ||
                     triggerTypeValue === 'custom-message'
+                  }
+                  required={
+                    triggerTypeValue === 'array-js-event' ||
+                    triggerTypeValue === 'one-js-event'
                   }
                   id="js-event-css-target"
                   variant="outlined"
@@ -248,6 +253,7 @@ function CodeConfigForm() {
                 <FormControl sx={{ width: '25%' }} variant="outlined">
                   <TextField
                     disabled={triggerTypeValue !== 'custom-message'}
+                    required={triggerTypeValue === 'custom-message'}
                     id="custom-msg-text"
                     variant="outlined"
                     value={customMessageTextValue}
@@ -255,6 +261,7 @@ function CodeConfigForm() {
                       setCustomMessageTextValue(e.target.value);
                     }}
                     size="small"
+                    label="Texto"
                   />
                 </FormControl>
               </DivFilterLayout>
@@ -346,6 +353,8 @@ function CodeConfigForm() {
                       setUrlFilterTextValue(e.target.value);
                     }}
                     size="small"
+                    required={urlFilterSwitch}
+                    label="Texto"
                   />
                 </FormControl>
               </DivFilterLayout>
@@ -382,11 +391,13 @@ function CodeConfigForm() {
                     }}
                     size="small"
                     label="Tempo em segundos"
+                    required={timerSwitch}
                   />
                 </FormControl>
               </DivFilterLayout>
             </ListItem>
           </List>
+          <small>Obs: Campos com &quot;*&quot; sao obrigatórios</small>
         </Form>
       </FormDiv>
     </Box>
