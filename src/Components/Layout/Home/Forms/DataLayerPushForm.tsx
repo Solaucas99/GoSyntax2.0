@@ -125,7 +125,7 @@ function DataLayerPushForm() {
                       <FormControl variant="outlined">
                         <TextField
                           id="dlp-key"
-                          label="Chave"
+                          label="Chave *"
                           variant="outlined"
                           onChange={e =>
                             setParamsArrKeyValues(prevValue =>
@@ -136,7 +136,6 @@ function DataLayerPushForm() {
                               )
                             )
                           }
-                          required
                           value={
                             paramsArrKeyValues.filter(
                               value => value.id === element.id
@@ -148,7 +147,7 @@ function DataLayerPushForm() {
                       <FormControl variant="outlined">
                         <TextField
                           id="dlp-value"
-                          label="Valor"
+                          label="Valor *"
                           variant="outlined"
                           onChange={e =>
                             setParamsArrKeyValues(prevValue =>
@@ -159,7 +158,6 @@ function DataLayerPushForm() {
                               )
                             )
                           }
-                          required
                           value={
                             paramsArrKeyValues.filter(
                               value => value.id === element.id

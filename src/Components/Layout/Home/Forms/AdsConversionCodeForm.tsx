@@ -118,11 +118,10 @@ function AdsConversionCodeForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="acc-conversion-id"
-                label="Insira o Conversion ID"
+                label="Insira o Conversion ID *"
                 variant="outlined"
                 onChange={e => setAccConversionId(e.target.value)}
                 value={accConversionId}
-                required
               />
             </FormControl>
           </ListItem>
@@ -131,11 +130,10 @@ function AdsConversionCodeForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="acc-conversion-label"
-                label="Insira o Conversion Label"
+                label="Insira o Conversion Label *"
                 variant="outlined"
                 onChange={e => setAccConversionLabel(e.target.value)}
                 value={accConversionLabel}
-                required
               />
             </FormControl>
           </ListItem>
@@ -146,10 +144,11 @@ function AdsConversionCodeForm() {
                 disabled={accConversionType === 'no-value'}
                 id="acc-value-css-selector"
                 variant="outlined"
-                label="Insira o seletor CSS do valor"
+                label={`Insira o seletor CSS do valor ${
+                  accConversionType === 'with-value' ? '*' : ''
+                }`}
                 onChange={e => setAccConversionValue(e.target.value)}
                 value={accConversionValue}
-                required={accConversionType === 'with-value'}
               />
             </FormControl>
           </ListItem>
@@ -163,7 +162,6 @@ function AdsConversionCodeForm() {
                 label="Insira o seletor CSS do ID da Transação"
                 onChange={e => setAccConversionTransactionId(e.target.value)}
                 value={accConversionTransactionId}
-                required={accConversionType === 'with-value'}
               />
             </FormControl>
           </ListItem>

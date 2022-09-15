@@ -64,6 +64,7 @@ const globalStyles = globalCss({
   html: {
     height: '100vh',
     background: '$background',
+    scrollBehavior: 'smooth',
   },
 
   body: {

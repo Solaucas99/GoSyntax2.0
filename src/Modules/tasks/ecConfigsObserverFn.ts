@@ -147,8 +147,8 @@ const ENHANCED_CONVERSIONS = (context: ContextGoSyntax, cmView: EditorView) => {
   /* eslint-disable */
   const code = `
   var g_ED = {
-    "email" : ${emailCssSelector},
-    ${phoneCssSelector && areaCode ? `"phone_number" : ${phoneCssSelector}` : ''}
+    "email" : '${emailCssSelector}',
+    ${phoneCssSelector && areaCode ? `"phone_number" : '${phoneCssSelector}'` : ''}
   }
 
 

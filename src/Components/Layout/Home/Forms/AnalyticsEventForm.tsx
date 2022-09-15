@@ -88,11 +88,10 @@ function AnalyticsEventForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="ane-event-name"
-                label="Insira o nome do evento"
+                label="Insira o nome do evento *"
                 variant="outlined"
                 onChange={e => setAneEventName(e.target.value)}
                 value={aneEventName}
-                required
               />
             </FormControl>
           </ListItem>
@@ -140,7 +139,7 @@ function AnalyticsEventForm() {
                       <FormControl variant="outlined">
                         <TextField
                           id="ane-event-key"
-                          label="Chave"
+                          label="Chave *"
                           variant="outlined"
                           onChange={e =>
                             setParamsArrKeyValues(prevValue =>
@@ -156,14 +155,13 @@ function AnalyticsEventForm() {
                               value => value.id === element.id
                             )[0].key
                           }
-                          required
                         />
                       </FormControl>
 
                       <FormControl variant="outlined">
                         <TextField
                           id="ane-event-value"
-                          label="Valor"
+                          label="Valor *"
                           variant="outlined"
                           onChange={e =>
                             setParamsArrKeyValues(prevValue =>
@@ -179,7 +177,6 @@ function AnalyticsEventForm() {
                               value => value.id === element.id
                             )[0].value
                           }
-                          required
                         />
                       </FormControl>
 

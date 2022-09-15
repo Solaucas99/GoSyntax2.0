@@ -9,6 +9,7 @@ import { html } from '@codemirror/lang-html';
 import { EditorState } from '@codemirror/state';
 import beautify from 'js-beautify';
 
+import { toast } from 'react-toastify';
 import CodeConfigForm from '../Components/Layout/Home/CodeConfigForm';
 import TaskConfigForm from '../Components/Layout/Home/TaskConfigForm';
 import { styled } from '../Styles/stitches.config';
@@ -24,6 +25,7 @@ import dlpErrorHandler from '../Modules/errorsHandlers/taskHandlers/dlpErrorHand
 import dlpConfigsObserverFn from '../Modules/tasks/dlpConfigsObserverFn';
 import ecConfigsObserverFn from '../Modules/tasks/ecConfigsObserverFn';
 import ecTriggersObserverFn from '../Modules/tasks/ecTriggersObserverFn';
+import ecErrorHandler from '../Modules/errorsHandlers/taskHandlers/ecErrorHandler';
 
 const Container = styled('div', {
   width: '100%',
@@ -75,6 +77,7 @@ const FormBox = styled('div', {
 
 const FormConfig = styled('form', {
   height: '100%',
+  padding: '12px',
 });
 
 const darkTheme = createTheme({
@@ -141,6 +144,10 @@ function Home() {
 
     if (context?.focusedTaskType === 'DataLayer Push') {
       taskErrorHandler.push(...dlpErrorHandler);
+    }
+
+    if (context?.focusedTaskType === 'Enhanced Conversions') {
+      taskErrorHandler.push(...ecErrorHandler);
     }
 
     const codeErrorSubject = subject();
@@ -289,6 +296,8 @@ function Home() {
 
       setCodeMirrorEnable(false);
       setView(CmView);
+      window.scrollTo(0, document.body.scrollHeight);
+      toast.success('Código gerado com sucesso!');
     }
   }, [codeMirrorEnable, context, view]);
 
@@ -324,6 +333,9 @@ function Home() {
 
                 <FormBox>
                   <FormConfig onSubmit={handleSubmit}>
+                    <small style={{ color: 'red' }}>
+                      Obs: Campos com &quot;*&quot; sao obrigatórios
+                    </small>
                     <CodeConfigBox>
                       <CodeConfigForm />
                       <TaskConfigForm />

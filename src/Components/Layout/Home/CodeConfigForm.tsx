@@ -190,13 +190,14 @@ function CodeConfigForm() {
                     triggerTypeValue === 'no-event' ||
                     triggerTypeValue === 'custom-message'
                   }
-                  required={triggerTypeValue !== 'no-event'}
                   value={jsEventTypeValue}
                   onChange={e => {
                     setJsEventTypeValue(e.target.value as JSEventType);
                   }}
                   size="small"
-                  label="Insira o tipo de evento JavaScript"
+                  label={`Insira o tipo de evento JavaScript ${
+                    triggerTypeValue !== 'no-event' ? '*' : ''
+                  }`}
                 >
                   <MenuItem value="click" selected>
                     Click
@@ -213,17 +214,18 @@ function CodeConfigForm() {
                     triggerTypeValue === 'no-event' ||
                     triggerTypeValue === 'custom-message'
                   }
-                  required={
-                    triggerTypeValue === 'array-js-event' ||
-                    triggerTypeValue === 'one-js-event'
-                  }
                   id="js-event-css-target"
                   variant="outlined"
                   value={jsEventCssTargetValue}
                   onChange={e => {
                     setJsEventCssTargetValue(e.target.value);
                   }}
-                  label="Insira o seletor CSS do alvo do Evento JavaScript"
+                  label={`Insira o seletor CSS do alvo do Evento JavaScript ${
+                    triggerTypeValue === 'array-js-event' ||
+                    triggerTypeValue === 'one-js-event'
+                      ? '*'
+                      : ''
+                  }`}
                   size="small"
                 />
               </FormControl>
@@ -253,7 +255,6 @@ function CodeConfigForm() {
                 <FormControl sx={{ width: '25%' }} variant="outlined">
                   <TextField
                     disabled={triggerTypeValue !== 'custom-message'}
-                    required={triggerTypeValue === 'custom-message'}
                     id="custom-msg-text"
                     variant="outlined"
                     value={customMessageTextValue}
@@ -261,7 +262,9 @@ function CodeConfigForm() {
                       setCustomMessageTextValue(e.target.value);
                     }}
                     size="small"
-                    label="Texto"
+                    label={`Texto ${
+                      triggerTypeValue === 'custom-message' ? '*' : ''
+                    }`}
                   />
                 </FormControl>
               </DivFilterLayout>
@@ -353,8 +356,7 @@ function CodeConfigForm() {
                       setUrlFilterTextValue(e.target.value);
                     }}
                     size="small"
-                    required={urlFilterSwitch}
-                    label="Texto"
+                    label={`Texto ${urlFilterSwitch ? '*' : ''}`}
                   />
                 </FormControl>
               </DivFilterLayout>
@@ -390,14 +392,12 @@ function CodeConfigForm() {
                       setTimerSecondsValue(e.target.value);
                     }}
                     size="small"
-                    label="Tempo em segundos"
-                    required={timerSwitch}
+                    label={`Tempo em segundos ${timerSwitch ? '*' : ''}`}
                   />
                 </FormControl>
               </DivFilterLayout>
             </ListItem>
           </List>
-          <small>Obs: Campos com &quot;*&quot; sao obrigatórios</small>
         </Form>
       </FormDiv>
     </Box>

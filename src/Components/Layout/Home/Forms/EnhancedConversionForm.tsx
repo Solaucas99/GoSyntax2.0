@@ -233,8 +233,7 @@ function EnhancedConversionForm() {
                   size="small"
                   value={ecUrlFilterTextValue}
                   onChange={e => setEcUrlFilterTextValue(e.target.value)}
-                  required={ecUrlFilterSwitch}
-                  label="Texto"
+                  label={`Texto ${ecUrlFilterSwitch ? '*' : ''}`}
                 />
               </FormControl>
             </DivFilterLayout>
@@ -263,7 +262,6 @@ function EnhancedConversionForm() {
               <FormControl sx={{ width: '25%' }} variant="outlined">
                 <TextField
                   disabled={!ecTimerSwitch}
-                  required={ecTimerSwitch}
                   id="ec-timer-seconds"
                   variant="outlined"
                   value={ecTimerSecondsValue}
@@ -271,7 +269,7 @@ function EnhancedConversionForm() {
                     setEcTimerSecondsValue(e.target.value);
                   }}
                   size="small"
-                  label="Tempo em segundos"
+                  label={`Tempo em segundos ${ecTimerSwitch ? '*' : ''}`}
                 />
               </FormControl>
             </DivFilterLayout>
@@ -281,10 +279,11 @@ function EnhancedConversionForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 disabled={enhancedConversionType === 'no-value'}
-                required={enhancedConversionType === 'with-value'}
                 id="enhanced-conversion-value-css-selector"
                 variant="outlined"
-                label="Insira o seletor CSS do valor"
+                label={`Insira o seletor CSS do valor ${
+                  enhancedConversionType === 'with-value' ? '*' : ''
+                }`}
                 onChange={e => setEnhancedConversionValue(e.target.value)}
                 value={enhancedConversionValue}
                 size="small"
@@ -296,7 +295,6 @@ function EnhancedConversionForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 disabled={enhancedConversionType === 'no-value'}
-                required={enhancedConversionType === 'with-value'}
                 id="enahnced-conversion-css-target"
                 variant="outlined"
                 label="Insira o seletor CSS do ID da Transação"
@@ -359,13 +357,12 @@ function EnhancedConversionForm() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 id="enhanced-conversion-email"
-                label="Seletor CSS do campo E-mail"
+                label="Seletor CSS do campo E-mail *"
                 variant="outlined"
                 onChange={e => setEnhancedConversionEmail(e.target.value)}
                 value={enhancedConversionEmail}
                 size="small"
                 type="text"
-                required
               />
             </FormControl>
           </ListItem>
@@ -389,7 +386,9 @@ function EnhancedConversionForm() {
 
                 <TextField
                   id="enhanced-conversion-area-code"
-                  label="Código de área do Telefone"
+                  label={`Código do país do Telefone ${
+                    enhancedConversionPhoneNumber ? '*' : ''
+                  }`}
                   variant="outlined"
                   onChange={e => setEnhancedConversionAreaCode(e.target.value)}
                   value={enhancedConversionAreaCode}

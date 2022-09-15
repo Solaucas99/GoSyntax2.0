@@ -43,9 +43,11 @@ const ADS_CONVERSION_CODE = (context: ContextGoSyntax, cmView: EditorView) => {
       'currency': '${
         context.taskConfigs?.adsConversionCode?.accConversionCurrency
       }',
-      'transaction_id': document.querySelector('${
+      ${
         context.taskConfigs?.adsConversionCode?.accConversionTransactionId
-      }').innerText.replace(/\\D+/g, '')
+          ? `'transaction_id': document.querySelector('${context.taskConfigs?.adsConversionCode?.accConversionTransactionId}').innerText`
+          : ''
+      }
   });`;
     return {
       changes: [
