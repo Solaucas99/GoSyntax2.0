@@ -185,7 +185,7 @@ const ENHANCED_CONVERSIONS = (context: ContextGoSyntax, cmView: EditorView) => {
 
   //Validações (não mexer)
   function g_validateEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
+    return /\\S+@\\S+\\.\\S+/.test(email);
   }
   g_setup_Enhanced_Conversion_Data();
   `;
