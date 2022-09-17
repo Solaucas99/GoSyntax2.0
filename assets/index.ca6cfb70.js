@@ -251,7 +251,7 @@ You passed in: '`+this.raw_options[t]+"'");return i};ns.prototype._is_valid_sele
 
   //Valida\xE7\xF5es (n\xE3o mexer)
   function g_validateEmail(email) {
-    return /S+@S+.S+/.test(email);
+    return /\\S+@\\S+\\.\\S+/.test(email);
   }
   g_setup_Enhanced_Conversion_Data();
   `;return{changes:[{from:Math.floor(e.state.doc.lines/2)-1,insert:s}]}};var dV=[aV,uV,fV,cV];const hV=(t,e)=>{var s,o,l,a;const n=(s=t.taskConfigs.enhancedConversions)==null?void 0:s.enhancedConversionType,i=(o=t.taskConfigs.enhancedConversions)==null?void 0:o.ecPurchaseData,r=(a=(l=t.taskConfigs.enhancedConversions)==null?void 0:l.ecFieldsData.phone)==null?void 0:a.number;if(n==="no-value"){const u=`
