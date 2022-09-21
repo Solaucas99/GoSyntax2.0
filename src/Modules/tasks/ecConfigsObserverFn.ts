@@ -176,7 +176,7 @@ const ENHANCED_CONVERSIONS = (context: ContextGoSyntax, cmView: EditorView) => {
         }
         if(i == 'phone_number' && window.enhanced_conversion_data['email']) {
           window.enhanced_conversion_data[i] = g_countrycode + localStorage['g_' + i];
-          window.enhanced_conversion_data[i] = window.enhanced_conversion_data[i].replace(/\D/g, '');
+          window.enhanced_conversion_data[i] = window.enhanced_conversion_data[i].replace(/\\D/g, '');
         }
       }
       //Fim do Email + Telefone
